@@ -1,4 +1,4 @@
--- Firebase базасы сілтемесі (сіздің жобаңыз бойынша қосылды)
+-- Firebase базасы сілтемесі
 local FIREBASE_URL = "https://play-lag-default-rtdb.firebaseio.com/Usuarios"
 
 -- Интерфейс (UI) жасау: Логин мен пароль сұрайтын терезе
@@ -11,8 +11,8 @@ screenGui.IgnoreGuiInset = true
 screenGui.Parent = playerGui
 
 local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 300, 0, 200)
-frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+frame.Size = UDim2.new(0, 320, 0, 260)
+frame.Position = UDim2.new(0.5, -160, 0.5, -130)
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 frame.BorderSizePixel = 0
 frame.Parent = screenGui
@@ -23,44 +23,62 @@ corner.Parent = frame
 
 local title = Instance.new("TextLabel")
 title.Size = UDim2.new(1, 0, 0, 40)
+title.Position = UDim2.new(0, 0, 0, 10)
 title.BackgroundTransparency = 1
 title.Text = "Хубқа кіру үшін логин жазыңыз"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextSize = 16
+title.TextSize = 15
 title.Font = Enum.Font.SourceSansBold
 title.Parent = frame
 
+-- Логин жазатын орын
 local userBox = Instance.new("TextBox")
-userBox.Size = UDim2.new(0.8, 0, 0, 35)
-userBox.Position = UDim2.new(0.1, 0, 0.3, 0)
+userBox.Size = UDim2.new(0.8, 0, 0, 40)
+userBox.Position = UDim2.new(0.1, 0, 0, 60)
 userBox.PlaceholderText = "Логин"
 userBox.Text = ""
 userBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 userBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+userBox.TextSize = 14
 userBox.Parent = frame
 
+local userCorner = Instance.new("UICorner")
+userCorner.CornerRadius = UDim.new(0, 6)
+userCorner.Parent = userBox
+
+-- Пароль жазатын орын
 local passBox = Instance.new("TextBox")
-passBox.Size = UDim2.new(0.8, 0, 0, 35)
-passBox.Position = UDim2.new(0.1, 0, 0.5, 0)
+passBox.Size = UDim2.new(0.8, 0, 0, 40)
+passBox.Position = UDim2.new(0.1, 0, 0, 115)
 passBox.PlaceholderText = "Пароль"
 passBox.Text = ""
-passBox.SecretText = true
 passBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 passBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+passBox.TextSize = 14
 passBox.Parent = frame
 
+local passCorner = Instance.new("UICorner")
+passCorner.CornerRadius = UDim.new(0, 6)
+passCorner.Parent = passBox
+
+-- Кіру түймесі (Кнопка)
 local loginBtn = Instance.new("TextButton")
-loginBtn.Size = UDim2.new(0.8, 0, 0, 35)
-loginBtn.Position = UDim2.new(0.1, 0, 0.75, 0)
+loginBtn.Size = UDim2.new(0.8, 0, 0, 40)
+loginBtn.Position = UDim2.new(0.1, 0, 0, 175)
 loginBtn.Text = "Кіру"
 loginBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 loginBtn.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+loginBtn.TextSize = 16
+loginBtn.Font = Enum.Font.SourceSansBold
 loginBtn.Parent = frame
+
+local btnCorner = Instance.new("UICorner")
+btnCorner.CornerRadius = UDim.new(0, 6)
+btnCorner.Parent = loginBtn
 
 -- Firebase арқылы тексеру функциясы
 local function checkLogin(username, password)
     local HttpService = game:GetService("HttpService")
-    -- Firebase-ден мәліметті алу
     local success, response = pcall(function()
         return game:HttpGet(FIREBASE_URL .. "/" .. username .. ".json")
     end)
